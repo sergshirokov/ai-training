@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": ["--datatype=doc", "--pretty", ".\\images\\image2.jpeg"]
+            "args": ["--datatype=doc", "--pretty", "--model=GigaChat-2-Pro", ".\\images\\image2.jpeg"]
         }
     ]
 }
