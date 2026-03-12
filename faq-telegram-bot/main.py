@@ -34,23 +34,36 @@ async def _keep_typing(chat, interval: float = 4.0) -> None:
         await asyncio.sleep(interval)
 
 
+ERROR_MESSAGE = (
+    "Произошла ошибка при формировании ответа. Попробуйте повторить запрос позже."
+)
+
+
 async def answer_question(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Отвечает на вопрос пользователя через GigaChat."""
-    qa: QaProcessor = context.application.bot_data["qa_processor"]
-    question = update.message.text or ""
-    logger.info("Вопрос от user_id=%s: %s", update.effective_user.id if update.effective_user else None, question[:100])
-    typing_task = asyncio.create_task(_keep_typing(update.effective_chat))
     try:
-        answer_text = await asyncio.to_thread(qa.answer, question)
-    finally:
-        typing_task.cancel()
+        qa: QaProcessor = context.application.bot_data["qa_processor"]
+        question = update.message.text or ""
+        logger.info(
+            "Вопрос от user_id=%s: %s",
+            update.effective_user.id if update.effective_user else None,
+            question[:100],
+        )
+        typing_task = asyncio.create_task(_keep_typing(update.effective_chat))
         try:
-            await typing_task
-        except asyncio.CancelledError:
-            pass
-    if len(answer_text) > 4096:
-        answer_text = answer_text[:4093] + "..."
-    await update.message.reply_text(answer_text)
+            answer_text = await asyncio.to_thread(qa.answer, question)
+        finally:
+            typing_task.cancel()
+            try:
+                await typing_task
+            except asyncio.CancelledError:
+                pass
+        if len(answer_text) > 4096:
+            answer_text = answer_text[:4093] + "..."
+        await update.message.reply_text(answer_text)
+    except Exception:
+        logger.exception("Ошибка при обработке вопроса")
+        await update.message.reply_text(ERROR_MESSAGE)
 
 
 def main() -> None:
