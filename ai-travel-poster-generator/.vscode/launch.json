@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "describe",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/describe.py",
+      "args": ["input/shang.jpg"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "generate",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/generate.py",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "pipeline",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/pipeline.py",
+      "args": ["input/siam.jpg", "Пхукет Сиам Нирамид"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

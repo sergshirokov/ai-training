@@ -1,0 +1,4 @@
+langchain-openai>=0.3
+langchain-gigachat>=0.3
+openai>=1.75
+python-dotenv>=1.1
