@@ -21,7 +21,14 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/pipeline.py",
-      "args": ["input/siam.jpg", "Пхукет Сиам Нирамид"],
+      "args": ["input/siam.jpg", "Пхукет таун Сиам Нирамит"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "app_web",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/app_web.py",
       "console": "integratedTerminal"
     }
   ]
